@@ -37,7 +37,7 @@ def transfer_files(source,target):
         else:
             print("invalid file")            
 
-transfer_start("/home/bagath/workspace/Static_Site_Generator/static","/home/bagath/workspace/Static_Site_Generator/public")
+transfer_start("/home/bagath/workspace/Static_Site_Generator/static","/home/bagath/workspace/Static_Site_Generator/docs")
 
 def extract_title(markdown):
     blocks = markdown_to_blocks(markdown)
@@ -82,5 +82,5 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path,base
         else:
             print("invalid file")    
 
-generate_pages_recursive ("/home/bagath/workspace/Static_Site_Generator/content/","/home/bagath/workspace/Static_Site_Generator/template.html","/home/bagath/workspace/Static_Site_Generator/public",basepath)
+generate_pages_recursive ("/home/bagath/workspace/Static_Site_Generator/content/","/home/bagath/workspace/Static_Site_Generator/template.html","/home/bagath/workspace/Static_Site_Generator/docs",basepath)
 
