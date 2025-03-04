@@ -54,6 +54,7 @@ def generate_page(from_path, template_path, dest_path,basepath):
     HTML = (markdown_to_html_node(MD,basepath)).to_html()
     title = extract_title(MD)
     temp = temp.replace("{{ Title }}", title)
+    temp = temp.replace('href="/index.css"', f'href="{basepath.rstrip('/')}/index.css"')
     Full_HTML = temp.replace("{{ Content }}", HTML)
     if not os.path.exists(dest_path):
         os.makedirs(dest_path, mode=0o777, exist_ok=False)
