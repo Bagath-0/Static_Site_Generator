@@ -22,21 +22,21 @@ class TextNode:
     def __repr__(self):
         return f"TextNode({self.text}, {self.text_type.value}, {self.URL})"
 
-    def text_node_to_html_node(text_node):
-        match (text_node.text_type):
+    def text_node_to_html_node(self, basepath):
+        match (self.text_type):
             case (TextType.NORMAL):
-                return (Leaf(None,text_node.text))
+                return Leaf(None, self.text)
             case (TextType.BOLD):
-                return (Leaf('"b"',text_node.text))
+                return Leaf('"b"', self.text)
             case (TextType.ITALIC):
-                return (Leaf('"i"',text_node.text))
+                return Leaf('"i"', self.text)
             case (TextType.CODE):
-                return (Leaf('"code"',text_node.text))
+                return Leaf('"code"', self.text)
             case (TextType.LINKS):
-                return (Leaf('"a"',text_node.text,{"href":text_node.URL}))
+                return Leaf('"a"', self.text, {"href": f"{basepath.rstrip("/")}{self.URL}"})
             case (TextType.IMAGES):
-                return (Leaf('"img"',"",{"src":text_node.URL,"alt":text_node.text}))
+                return Leaf('"img"', "", {"src": f"{basepath.rstrip("/")}{self.URL}", "alt": self.text})
             case _:
-                raise Exception ("invalid type")
-            
+                raise Exception("invalid type")
+                    
 

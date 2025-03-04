@@ -1,5 +1,3 @@
-def __repr__(self):
-    return f"tag={self.tag} value={self.value} children={self.children} props={self.props}"
 
 class HTML:
     def __init__(self,tag=None,value=None,children=None,props=None):

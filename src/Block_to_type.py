@@ -20,7 +20,7 @@ def block_to_block_type(text):
         return BlockType.QUOTE
     if block_to_helper(text,"-"," ") == True:
         return BlockType.UNORDERED_LIST
-    if block_to_helper(text,"."," ","True") == True:
+    if block_to_helper(text,"."," ",True) == True:
         return BlockType.ORDERED_LIST
     return BlockType.PARAGRAPH
     

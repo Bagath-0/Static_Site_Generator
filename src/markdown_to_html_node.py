@@ -5,7 +5,7 @@ from Block_to_type import *
 from textnode import TextNode
 from htmlnode import *
     
-def markdown_to_html_node(markdown):
+def markdown_to_html_node(markdown,basepath):
     blocks = markdown_to_blocks(markdown)
     child_nodes = []  # List to collect all block nodes
     
@@ -17,7 +17,7 @@ def markdown_to_html_node(markdown):
                 # Replace multiple spaces and newlines with a single space
                 normalized_text = " ".join(block.split())
                 print (normalized_text)
-                node = ParentNode("p", text_to_children(normalized_text))
+                node = ParentNode("p", text_to_children(normalized_text,basepath))
                 child_nodes.append(node)
                 
             case BlockType.HEADING:
@@ -29,7 +29,7 @@ def markdown_to_html_node(markdown):
                     else:
                         break
                 heading_text = block[level:].strip()
-                node = ParentNode(f"h{level}", text_to_children(heading_text))
+                node = ParentNode(f"h{level}", text_to_children(heading_text,basepath))
                 child_nodes.append(node)
                 
             case BlockType.CODE:
@@ -37,7 +37,7 @@ def markdown_to_html_node(markdown):
                 
                 text = block.strip("```")
                 text_node = TextNode(text,TextType.CODE)
-                html_node = text_node.text_node_to_html_node()
+                html_node = text_node.text_node_to_html_node(basepath)
                 node = ParentNode("pre",[html_node])
                 child_nodes.append(node)
                 
@@ -50,7 +50,7 @@ def markdown_to_html_node(markdown):
                     # Remove the "- " prefix and process the item text
                     item_text = item.strip()[2:].strip()
                     # Create li node with processed children
-                    li_node = ParentNode("li",  text_to_children(item_text))
+                    li_node = ParentNode("li",  text_to_children(item_text,basepath))
                     list_items.append(li_node)
                 
                 # Create ul node with all list items
@@ -70,7 +70,7 @@ def markdown_to_html_node(markdown):
                         item_text = item_text[dot_index + 1:].strip()
                     
                     # Create li node with processed children
-                    li_node = ParentNode("li", text_to_children(item_text))
+                    li_node = ParentNode("li", text_to_children(item_text,basepath))
                     list_items.append(li_node)
                 
                 # Create ol node with all list items
@@ -86,7 +86,7 @@ def markdown_to_html_node(markdown):
                 for line in lines
                 if line.strip() != ">"
             )
-                node = ParentNode("blockquote", text_to_children(quote_content.strip()))
+                node = ParentNode("blockquote", text_to_children(quote_content.strip(),basepath))
                 child_nodes.append(node)          
 
                 
@@ -94,14 +94,14 @@ def markdown_to_html_node(markdown):
     
     return ParentNode("div", child_nodes)
 
-def text_to_children(text):
+def text_to_children(text,basepath):
     # Get the text nodes using your existing function
     text_nodes = text_to_textnodes(text)
     
     # Convert each TextNode to an HTMLNode
     html_nodes = []
     for node in text_nodes:
-        html_node = node.text_node_to_html_node()
+        html_node = node.text_node_to_html_node(basepath)
         html_nodes.append(html_node)
     
     return html_nodes
